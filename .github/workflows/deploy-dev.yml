@@ -2,8 +2,8 @@ name: Deploy Dev Subgraphs
 
 on:
   push:
-    tags:
-      - 'dev-v*'
+    branches:
+      - dev
 
 jobs:
   deploy-subgraphs:
@@ -27,9 +27,9 @@ jobs:
         cp -r src/* dev-defi-money-arbitrum/src/
         cp -r src/* dev-defi-money-optimism/src/
 
-    - name: Get tag version
-      id: get_tag
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/dev-v}
+    - name: Get short commit hash
+      id: get_hash
+      run: echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
 
     - name: Deploy Arbitrum Subgraph
       working-directory: dev-defi-money-arbitrum
@@ -39,7 +39,7 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --network arbitrum-one --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_tag.outputs.VERSION }}
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --network arbitrum-one --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
@@ -49,4 +49,4 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --network optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_tag.outputs.VERSION }}
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --network optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}
