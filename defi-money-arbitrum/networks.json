@@ -1,6 +1,6 @@
 {
   "arbitrum-one": {
-    "CDP Main Controller": {
+    "CDPMainController": {
       "address": "0x1337F001E280420EcCe9E7B934Fa07D67fdb62CD",
       "startBlock": 225735367
     }

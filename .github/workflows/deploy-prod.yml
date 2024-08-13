@@ -1,0 +1,52 @@
+name: Deploy Dev Subgraphs
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy-subgraphs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm install -g @graphprotocol/graph-cli
+
+    - name: Copy src folder to subfolders
+      run: |
+        cp -r src/* defi-money-arbitrum/src/
+        cp -r src/* defi-money-optimism/src/
+
+    - name: Get short commit hash
+      id: get_hash
+      run: echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
+
+    - name: Deploy Arbitrum Subgraph
+      working-directory: defi-money-arbitrum
+      env:
+        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        graph deploy --node https://api.studio.thegraph.com/deploy/ defi-money-arbitrum --network arbitrum-one --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}
+
+    - name: Deploy Optimism Subgraph
+      working-directory: defi-money-optimism
+      env:
+        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        graph deploy --node https://api.studio.thegraph.com/deploy/ defi-money-optimism --network optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}

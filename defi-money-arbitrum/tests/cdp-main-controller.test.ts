@@ -8,7 +8,7 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { AddMarket } from "../generated/schema"
-import { AddMarket as AddMarketEvent } from "../generated/CDP Main Controller/CDP Main Controller"
+import { AddMarket as AddMarketEvent } from "../generated/CDPMainController/CDPMainController"
 import { handleAddMarket } from "../src/cdp-main-controller"
 import { createAddMarketEvent } from "./cdp-main-controller-utils"
 

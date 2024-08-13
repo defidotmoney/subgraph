@@ -18,7 +18,7 @@ import {
   LiquidateLoan as LiquidateLoanEvent,
   CollectAmmFees as CollectAmmFeesEvent,
   CollectFees as CollectFeesEvent
-} from "../generated/CDP Main Controller/CDP Main Controller"
+} from "../generated/CDPMainController/CDPMainController"
 import {
   AddMarket,
   SetDelegateApproval,
