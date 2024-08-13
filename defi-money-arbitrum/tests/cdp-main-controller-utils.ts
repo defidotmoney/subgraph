@@ -20,7 +20,7 @@ import {
   LiquidateLoan,
   CollectAmmFees,
   CollectFees
-} from "../generated/CDPMainController/CDPMainController"
+} from "../generated/CDP Main Controller/CDP Main Controller"
 
 export function createAddMarketEvent(
   collateral: Address,
