@@ -1,0 +1,48 @@
+name: Deploy Subgraphs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-subgraphs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        npm install -g @graphprotocol/graph-cli
+
+    - name: Copy src folder to subfolders
+      run: |
+        cp -r src/* dev-defi-money-arbitrum/src/
+        cp -r src/* dev-defi-money-optimism/src/
+
+    - name: Deploy Arbitrum Subgraph
+      working-directory: dev-defi-money-arbitrum
+      env:
+        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum
+
+    - name: Deploy Optimism Subgraph
+      working-directory: dev-defi-money-optimism
+      env:
+        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism
