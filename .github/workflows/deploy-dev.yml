@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'
+        node-version: '16'
 
     - name: Install dependencies
       run: |
@@ -35,7 +35,7 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --version-label v0.0.3
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
@@ -45,4 +45,4 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --version-label v0.0.3
