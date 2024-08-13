@@ -35,7 +35,7 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label v0.0.3
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --network arbitrum-one --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label v0.0.3
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
@@ -45,4 +45,4 @@ jobs:
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label v0.0.3
+        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --network optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label v0.0.3
