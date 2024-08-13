@@ -1,0 +1,80 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CDPMainController
+    network: arbitrum-one
+    source:
+      address: "0xfb934020D98e20e0a0Ed6442156e42b076909ca8"
+      abi: CDPMainController
+      startBlock: 223682657
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AddMarket
+        - SetDelegateApproval
+        - SetDelegationEnabled
+        - SetProtocolEnabled
+        - SetImplementations
+        - AddMarketHook
+        - RemoveMarketHook
+        - HookDebtAjustment
+        - AddMonetaryPolicy
+        - ChangeMonetaryPolicy
+        - ChangeMonetaryPolicyForMarket
+        - SetGlobalMarketDebtCeiling
+        - SetPegKeeperRegulator
+        - CreateLoan
+        - AdjustLoan
+        - CloseLoan
+        - LiquidateLoan
+        - CollectAmmFees
+        - CollectFees
+      abis:
+        - name: CDPMainController
+          file: ./abis/CDPMainController.json
+      eventHandlers:
+        - event: AddMarket(indexed address,address,address,uint256)
+          handler: handleAddMarket
+        - event: SetDelegateApproval(indexed address,indexed address,bool)
+          handler: handleSetDelegateApproval
+        - event: SetDelegationEnabled(address,bool)
+          handler: handleSetDelegationEnabled
+        - event: SetProtocolEnabled(address,bool)
+          handler: handleSetProtocolEnabled
+        - event: SetImplementations(indexed uint256,address,address)
+          handler: handleSetImplementations
+        - event: AddMarketHook(indexed address,indexed address,uint256,bool[4])
+          handler: handleAddMarketHook
+        - event: RemoveMarketHook(indexed address,indexed address,uint256)
+          handler: handleRemoveMarketHook
+        - event: HookDebtAjustment(indexed address,indexed address,int256,uint256,uint256)
+          handler: handleHookDebtAjustment
+        - event: AddMonetaryPolicy(indexed uint256,address)
+          handler: handleAddMonetaryPolicy
+        - event: ChangeMonetaryPolicy(indexed uint256,address)
+          handler: handleChangeMonetaryPolicy
+        - event: ChangeMonetaryPolicyForMarket(indexed address,indexed uint256)
+          handler: handleChangeMonetaryPolicyForMarket
+        - event: SetGlobalMarketDebtCeiling(uint256)
+          handler: handleSetGlobalMarketDebtCeiling
+        - event: SetPegKeeperRegulator(address,bool)
+          handler: handleSetPegKeeperRegulator
+        - event: CreateLoan(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleCreateLoan
+        - event: AdjustLoan(indexed address,indexed address,indexed address,int256,int256)
+          handler: handleAdjustLoan
+        - event: CloseLoan(indexed address,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleCloseLoan
+        - event: LiquidateLoan(indexed address,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleLiquidateLoan
+        - event: CollectAmmFees(indexed address,uint256,uint256)
+          handler: handleCollectAmmFees
+        - event: CollectFees(uint256,uint256,uint256,uint256)
+          handler: handleCollectFees
+      file: ./src/cdp-main-controller.ts
