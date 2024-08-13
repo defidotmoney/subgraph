@@ -1,9 +1,9 @@
-name: Deploy Subgraphs
+name: Deploy Dev Subgraphs
 
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   deploy-subgraphs:
