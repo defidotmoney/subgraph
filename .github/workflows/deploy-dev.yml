@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm install -g @graphprotocol/graph-cli
-        curl https://goldsky.com | sh
+        npm install -g @goldskycom/cli
 
     - name: Copy src folder to subfolders
       run: |
