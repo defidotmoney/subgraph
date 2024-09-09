@@ -40,7 +40,7 @@ jobs:
         npm install
         graph codegen
         graph build
-        goldsky subgraph update dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky subgraph deploy dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
