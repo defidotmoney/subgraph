@@ -32,15 +32,15 @@ jobs:
       id: get_hash
       run: echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
 
-    # - name: Deploy Arbitrum Subgraph
-    #   working-directory: dev-defi-money-arbitrum
-    #   env:
-    #     GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
-    #   run: |
-    #     npm install
-    #     graph codegen
-    #     graph build
-    #     goldsky subgraph deploy dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
+    - name: Deploy Arbitrum Subgraph
+      working-directory: dev-defi-money-arbitrum
+      env:
+        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        goldsky subgraph deploy dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
