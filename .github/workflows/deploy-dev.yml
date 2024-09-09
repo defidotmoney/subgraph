@@ -21,6 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         npm install -g @graphprotocol/graph-cli
+        curl https://goldsky.com | sh
 
     - name: Copy src folder to subfolders
       run: |
@@ -34,19 +35,19 @@ jobs:
     - name: Deploy Arbitrum Subgraph
       working-directory: dev-defi-money-arbitrum
       env:
-        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
       run: |
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-arbitrum --network arbitrum-one --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}
+        goldsky subgraph deploy dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
       env:
-        GRAPH_ACCESS_TOKEN: ${{ secrets.GRAPH_ACCESS_TOKEN }}
+        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
       run: |
         npm install
         graph codegen
         graph build
-        graph deploy --node https://api.studio.thegraph.com/deploy/ dev-defi-money-optimism --network optimism --deploy-key ${{ secrets.GRAPH_ACCESS_TOKEN }} --version-label ${{ steps.get_hash.outputs.SHA_SHORT }}
+        goldsky subgraph deploy dev-defi-money-optimism/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
