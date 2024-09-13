@@ -26,10 +26,6 @@ jobs:
         cp -r src/* dev-defi-money-arbitrum/src/
         cp -r src/* dev-defi-money-optimism/src/
 
-    - name: Get short commit hash
-      id: get_hash
-      run: echo "::set-output name=SHA_SHORT::$(git rev-parse --short HEAD)"
-
     - name: Deploy Arbitrum Subgraph
       working-directory: dev-defi-money-arbitrum
       env:
@@ -38,7 +34,7 @@ jobs:
         npm install
         graph codegen
         graph build
-        goldsky subgraph deploy dev-defi-money-arbitrum/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky subgraph deploy dev-defi-money-arbitrum/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
 
     - name: Deploy Optimism Subgraph
       working-directory: dev-defi-money-optimism
@@ -48,4 +44,4 @@ jobs:
         npm install
         graph codegen
         graph build
-        goldsky subgraph deploy dev-defi-money-optimism/${{ steps.get_hash.outputs.SHA_SHORT }} --token ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky subgraph deploy dev-defi-money-optimism/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
