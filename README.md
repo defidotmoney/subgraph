@@ -1,10 +1,7 @@
 # Defi Money Subgraph
 
-changes in `/src` folder commited to `dev` branch are deployed to `OP DEV` and `ARB DEV` subgraphs
+Deploy manually:
 
-changes in `/src` folder commited to `prod` branch are deployed to `OP PROD` and `ARB PROD` subgraphs
-
-- `OPTIMISM DEV`: https://thegraph.com/studio/subgraph/dev-defi-money-optimism/endpoints
-- `OPTIMISM PROD`: https://thegraph.com/studio/subgraph/defi-money-optimism/endpoints
-- `ARBITRUM DEV`: https://thegraph.com/studio/subgraph/dev-defi-money-arbitrum/endpoints
-- `ARBITRUM PROD`: https://thegraph.com/studio/subgraph/defi-money-arbitrum/endpoints
+- bump version in [workflow files](https://github.com/defidotmoney/subgraph/tree/dev/.github/workflows)
+- run [deploy dev workflow](https://github.com/defidotmoney/subgraph/actions/workflows/deploy-dev.yml)
+- run [deploy prod workflow](https://github.com/defidotmoney/subgraph/actions/workflows/deploy-prod.yml)
