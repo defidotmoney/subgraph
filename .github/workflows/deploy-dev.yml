@@ -1,10 +1,5 @@
 name: Deploy Dev Subgraphs
 
-on:
-  push:
-    branches:
-      - dev
-
 jobs:
   deploy-subgraphs:
     runs-on: ubuntu-latest
