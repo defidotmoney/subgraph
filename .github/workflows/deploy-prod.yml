@@ -1,4 +1,4 @@
-name: Deploy Dev Subgraphs
+name: Deploy Prod Subgraphs
 
 on:
   workflow_dispatch: 
