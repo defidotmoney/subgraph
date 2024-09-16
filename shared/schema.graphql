@@ -1,3 +1,54 @@
+type AccountWeightUpdated @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  epoch: BigInt! # uint256
+  timestamp: BigInt! # uint256
+  newWeight: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ApprovedUnstakerSet @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  caller: Bytes! # address
+  isApproved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LocksDisabled @entity(immutable: true) {
+  id: Bytes!
+
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Staked @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  epoch: BigInt! # uint256
+  amount: BigInt! # uint256
+  weightAdded: BigInt! # uint256
+  isLocked: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unstaked @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  epoch: BigInt! # uint256
+  amount: BigInt! # uint256
+  weightRemoved: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
 type AddMarket @entity(immutable: true) {
   id: Bytes!
   collateral: Bytes! # address
