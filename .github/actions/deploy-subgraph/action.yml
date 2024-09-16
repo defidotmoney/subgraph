@@ -10,6 +10,9 @@ inputs:
   goldsky_api_key:
     description: 'Goldsky API Key'
     required: true
+  version:
+    description: 'Version of the subgraph to deploy (e.g., 1.0.0, must be SemVer)'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -38,4 +41,4 @@ runs:
         npm install
         graph codegen
         graph build
-        goldsky subgraph deploy ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/1.0.0 --token ${{ inputs.goldsky_api_key }}
+        goldsky subgraph deploy ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/${{ inputs.version }} --token ${{ inputs.goldsky_api_key }}
