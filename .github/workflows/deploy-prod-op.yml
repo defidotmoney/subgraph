@@ -1,4 +1,4 @@
-name: Deploy Prod Subgraphs Optimism
+name: Deploy Optimism Prod
 
 on:
   workflow_dispatch: 

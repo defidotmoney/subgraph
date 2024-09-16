@@ -1,4 +1,4 @@
-name: Deploy Dev Subgraphs Arbitrum
+name: Deploy Arbitrum Dev
 
 on:
   workflow_dispatch: 
