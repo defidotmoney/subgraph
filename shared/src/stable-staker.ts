@@ -40,6 +40,7 @@ import {
   Transfer,
   Unstake
 } from "../generated/schema"
+import { Bytes } from "@graphprotocol/graph-ts";
 
 export function handleApproval(event: ApprovalEvent): void {
   let entity = new Approval(
@@ -121,7 +122,12 @@ export function handleEnforcedOptionSet(event: EnforcedOptionSetEvent): void {
   let entity = new EnforcedOptionSet(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
-  entity._enforcedOptions = event.params._enforcedOptions
+  
+  let enforcedOptionsBytes = event.params._enforcedOptions.map<Bytes>((option) => {
+    return Bytes.fromUint8Array(Bytes.fromHexString(option.options.toHexString()).subarray(0));
+  });
+  
+  entity._enforcedOptions = enforcedOptionsBytes;
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
