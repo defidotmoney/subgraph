@@ -1,4 +1,4 @@
-name: Deploy Prod Subgraphs
+name: Deploy Dev Subgraphs Arbitrum
 
 on:
   workflow_dispatch: 
@@ -23,25 +23,15 @@ jobs:
 
     - name: Copy src folder to subfolders
       run: |
-        cp -r src/* defi-money-arbitrum/src/
-        cp -r src/* defi-money-optimism/src/
+        cp -r src/* dev-defi-money-arbitrum/src/
+        cp -r src/* dev-defi-money-optimism/src/
 
     - name: Deploy Arbitrum Subgraph
-      working-directory: defi-money-arbitrum
+      working-directory: dev-defi-money-arbitrum
       env:
         GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
       run: |
         npm install
         graph codegen
         graph build
-        goldsky subgraph deploy defi-money-arbitrum/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
-
-    - name: Deploy Optimism Subgraph
-      working-directory: defi-money-optimism
-      env:
-        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
-      run: |
-        npm install
-        graph codegen
-        graph build
-        goldsky subgraph deploy defi-money-optimism/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky subgraph deploy dev-defi-money-arbitrum/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}

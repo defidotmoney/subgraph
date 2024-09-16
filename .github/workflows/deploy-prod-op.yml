@@ -1,0 +1,37 @@
+name: Deploy Prod Subgraphs Optimism
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  deploy-subgraphs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: |
+        npm install -g @graphprotocol/graph-cli
+        npm install -g @goldskycom/cli
+
+    - name: Copy src folder to subfolders
+      run: |
+        cp -r src/* defi-money-arbitrum/src/
+        cp -r src/* defi-money-optimism/src/
+
+    - name: Deploy Optimism Subgraph
+      working-directory: defi-money-optimism
+      env:
+        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        goldsky subgraph deploy defi-money-optimism/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
