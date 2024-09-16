@@ -4,4 +4,5 @@ Shared files are duplicated inside the correct folder you are deploying when you
 
 - workflow copies shared files into the respective deploy
 - workflow run codegen + build + deploy
-- make sure to bump subgraph version in workflow file (or delete previous if redeploying same version)
+- `graph add CONTRACT_ADDRESS` in shared folder adds a new contract
+- `goldsky subgraph delete name/version` deletes subgraphs (so we don't pay for their availability)
