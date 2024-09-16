@@ -7,6 +7,9 @@ inputs:
   network:
     description: 'Network (optimism or arbitrum)'
     required: true
+  goldsky_api_key:
+    description: 'Goldsky API Key'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -30,9 +33,9 @@ runs:
       shell: bash
       working-directory: ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}
       env:
-        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
+        GOLDSKY_API_KEY: ${{ inputs.goldsky_api_key }}
       run: |
         npm install
         graph codegen
         graph build
-        goldsky subgraph deploy ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/1.0.0 --token ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky subgraph deploy ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/1.0.0 --token ${{ inputs.goldsky_api_key }}

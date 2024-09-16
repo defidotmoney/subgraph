@@ -16,5 +16,4 @@ jobs:
       with:
         environment: dev
         network: optimism
-      env:
-        GOLDSKY_API_KEY: ${{ secrets.GOLDSKY_API_KEY }}
+        goldsky_api_key: ${{ secrets.GOLDSKY_API_KEY }}
