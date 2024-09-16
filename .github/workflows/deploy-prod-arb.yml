@@ -1,7 +1,11 @@
 name: Deploy Arbitrum Prod
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the subgraph to deploy (e.g., 1.0.0)'
+        required: true
 
 jobs:
   deploy-subgraphs:
@@ -16,3 +20,4 @@ jobs:
         environment: prod
         network: arbitrum
         goldsky_api_key: ${{ secrets.GOLDSKY_API_KEY }}
+        version: ${{ github.event.inputs.version }}
