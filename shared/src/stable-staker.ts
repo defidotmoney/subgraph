@@ -120,7 +120,7 @@ export function handleDeposit(event: DepositEvent): void {
   entity.save()
 
   // Update UserBalance
-  let userBalanceId = event.params.owner.toHexString()
+  let userBalanceId = Bytes.fromHexString(event.params.owner.toHexString())
   let userBalance = UserBalance.load(userBalanceId)
   if (userBalance == null) {
     userBalance = new UserBalance(userBalanceId)
@@ -336,7 +336,7 @@ export function handleUnstake(event: UnstakeEvent): void {
   entity.save()
 
   // Update UserBalance
-  let userBalanceId = event.params.owner.toHexString()
+  let userBalanceId = Bytes.fromHexString(event.params.owner.toHexString())
   let userBalance = UserBalance.load(userBalanceId)
   if (userBalance == null) {
     userBalance = new UserBalance(userBalanceId)
