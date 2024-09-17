@@ -1,26 +1,27 @@
 import {
-  Approval as ApprovalEvent,
-  BridgeEnabledSet as BridgeEnabledSetEvent,
-  Cooldown as CooldownEvent,
-  CooldownDurationUpdated as CooldownDurationUpdatedEvent,
-  Deposit as DepositEvent,
-  EnforcedOptionSet as EnforcedOptionSetEvent,
-  FeeAggregatorSet as FeeAggregatorSetEvent,
-  GovStakerSet as GovStakerSetEvent,
-  MsgInspectorSet as MsgInspectorSetEvent,
-  NewRewardPeriod as NewRewardPeriodEvent,
-  NotifyNewFees as NotifyNewFeesEvent,
-  OFTReceived as OFTReceivedEvent,
-  OFTSent as OFTSentEvent,
-  OwnershipTransferred as OwnershipTransferredEvent,
-  PeerSet as PeerSetEvent,
-  PreCrimeSet as PreCrimeSetEvent,
-  RewardRegulatorSet as RewardRegulatorSetEvent,
-  Transfer as TransferEvent,
-  Unstake as UnstakeEvent,
-  UserBalance // Add UserBalance here
-} from "../generated/schema"
-import { BigInt, Bytes } from "@graphprotocol/graph-ts";
+  Approval,
+  BridgeEnabledSet,
+  Cooldown,
+  CooldownDurationUpdated,
+  Deposit,
+  EnforcedOptionSet,
+  FeeAggregatorSet,
+  GovStakerSet,
+  MsgInspectorSet,
+  NewRewardPeriod,
+  NotifyNewFees,
+  OFTReceived,
+  OFTSent,
+  OwnershipTransferred,
+  PeerSet,
+  PreCrimeSet,
+  RewardRegulatorSet,
+  Transfer,
+  Unstake,
+  UserBalance
+} from "../generated/StableStaker/StableStaker"
+
+import { BigInt, Bytes } from "@graphprotocol/graph-ts"
 
 export function handleApproval(event: ApprovalEvent): void {
   let entity = new Approval(
@@ -98,7 +99,7 @@ export function handleDeposit(event: DepositEvent): void {
   entity.save()
 
   // Update UserBalance
-  let userBalanceId = event.params.owner
+  let userBalanceId = event.params.owner.toHexString()
   let userBalance = UserBalance.load(userBalanceId)
   if (userBalance == null) {
     userBalance = new UserBalance(userBalanceId)
@@ -314,7 +315,7 @@ export function handleUnstake(event: UnstakeEvent): void {
   entity.save()
 
   // Update UserBalance
-  let userBalanceId = event.params.owner
+  let userBalanceId = event.params.owner.toHexString()
   let userBalance = UserBalance.load(userBalanceId)
   if (userBalance == null) {
     userBalance = new UserBalance(userBalanceId)
