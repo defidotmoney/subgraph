@@ -375,3 +375,11 @@ type Unstake @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+# Custom Entities
+
+type UserBalance @entity {
+  id: Bytes! # user address
+  balance: BigInt!
+  lastUpdated: BigInt!
+}

@@ -17,30 +17,10 @@ import {
   PreCrimeSet as PreCrimeSetEvent,
   RewardRegulatorSet as RewardRegulatorSetEvent,
   Transfer as TransferEvent,
-  Unstake as UnstakeEvent
-} from "../generated/StableStaker/StableStaker"
-import {
-  Approval,
-  BridgeEnabledSet,
-  Cooldown,
-  CooldownDurationUpdated,
-  Deposit,
-  EnforcedOptionSet,
-  FeeAggregatorSet,
-  GovStakerSet,
-  MsgInspectorSet,
-  NewRewardPeriod,
-  NotifyNewFees,
-  OFTReceived,
-  OFTSent,
-  OwnershipTransferred,
-  PeerSet,
-  PreCrimeSet,
-  RewardRegulatorSet,
-  Transfer,
-  Unstake
+  Unstake as UnstakeEvent,
+  UserBalance // Add UserBalance here
 } from "../generated/schema"
-import { Bytes } from "@graphprotocol/graph-ts";
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 export function handleApproval(event: ApprovalEvent): void {
   let entity = new Approval(
@@ -116,6 +96,17 @@ export function handleDeposit(event: DepositEvent): void {
   entity.transactionHash = event.transaction.hash
 
   entity.save()
+
+  // Update UserBalance
+  let userBalanceId = event.params.owner
+  let userBalance = UserBalance.load(userBalanceId)
+  if (userBalance == null) {
+    userBalance = new UserBalance(userBalanceId)
+    userBalance.balance = BigInt.fromI32(0)
+  }
+  userBalance.balance = userBalance.balance.plus(event.params.assets)
+  userBalance.lastUpdated = event.block.timestamp
+  userBalance.save()
 }
 
 export function handleEnforcedOptionSet(event: EnforcedOptionSetEvent): void {
@@ -321,4 +312,15 @@ export function handleUnstake(event: UnstakeEvent): void {
   entity.transactionHash = event.transaction.hash
 
   entity.save()
+
+  // Update UserBalance
+  let userBalanceId = event.params.owner
+  let userBalance = UserBalance.load(userBalanceId)
+  if (userBalance == null) {
+    userBalance = new UserBalance(userBalanceId)
+    userBalance.balance = BigInt.fromI32(0)
+  }
+  userBalance.balance = userBalance.balance.minus(event.params.assets)
+  userBalance.lastUpdated = event.block.timestamp
+  userBalance.save()
 }
