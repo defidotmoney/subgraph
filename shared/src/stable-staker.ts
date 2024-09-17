@@ -1,4 +1,25 @@
 import {
+  Approval as ApprovalEvent,
+  BridgeEnabledSet as BridgeEnabledSetEvent,
+  Cooldown as CooldownEvent,
+  CooldownDurationUpdated as CooldownDurationUpdatedEvent,
+  Deposit as DepositEvent,
+  EnforcedOptionSet as EnforcedOptionSetEvent,
+  FeeAggregatorSet as FeeAggregatorSetEvent,
+  GovStakerSet as GovStakerSetEvent,
+  MsgInspectorSet as MsgInspectorSetEvent,
+  NewRewardPeriod as NewRewardPeriodEvent,
+  NotifyNewFees as NotifyNewFeesEvent,
+  OFTReceived as OFTReceivedEvent,
+  OFTSent as OFTSentEvent,
+  OwnershipTransferred as OwnershipTransferredEvent,
+  PeerSet as PeerSetEvent,
+  PreCrimeSet as PreCrimeSetEvent,
+  RewardRegulatorSet as RewardRegulatorSetEvent,
+  Transfer as TransferEvent,
+  Unstake as UnstakeEvent
+} from "../generated/StableStaker/StableStaker"
+import {
   Approval,
   BridgeEnabledSet,
   Cooldown,
@@ -19,7 +40,7 @@ import {
   Transfer,
   Unstake,
   UserBalance
-} from "../generated/StableStaker/StableStaker"
+} from "../generated/schema"
 
 import { BigInt, Bytes } from "@graphprotocol/graph-ts"
 
