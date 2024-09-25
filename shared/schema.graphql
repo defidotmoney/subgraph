@@ -433,3 +433,9 @@ type UserBalance @entity {
   balance: BigInt!
   lastUpdated: BigInt!
 }
+
+type MoneyDebt @entity {
+  id: ID!
+  date: BigInt!
+  totalDebt: BigInt!
+}
