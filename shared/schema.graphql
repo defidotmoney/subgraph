@@ -376,6 +376,56 @@ type Unstake @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
+# AMMs
+
+type TokenExchange @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  buyer: Bytes! # address
+  sold_id: BigInt! # uint256
+  tokens_sold: BigInt! # uint256
+  bought_id: BigInt! # uint256
+  tokens_bought: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Deposit @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  provider: Bytes! # address
+  amount: BigInt! # uint256
+  n1: BigInt! # int256
+  n2: BigInt! # int256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Withdraw @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  provider: Bytes! # address
+  amount_borrowed: BigInt! # uint256
+  amount_collateral: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetRate @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  rate: BigInt! # uint256
+  rate_mul: BigInt! # uint256
+  time: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+
 # Custom Entities
 
 type UserBalance @entity {
