@@ -269,6 +269,10 @@ export function handleCreateLoan(event: CreateLoanEvent): void {
   entity.coll_amount = event.params.coll_amount
   entity.debt_amount = event.params.debt_amount
 
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+
   let moneyDebt = getOrCreateMoneyDebt(event.block.timestamp)
   moneyDebt.totalDebt = moneyDebt.totalDebt.plus(event.params.debt_amount)
   moneyDebt.save()
@@ -285,6 +289,10 @@ export function handleAdjustLoan(event: AdjustLoanEvent): void {
   entity.caller = event.params.caller
   entity.coll_adjustment = event.params.coll_adjustment
   entity.debt_adjustment = event.params.debt_adjustment
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
 
   let moneyDebt = getOrCreateMoneyDebt(event.block.timestamp)
   moneyDebt.totalDebt = moneyDebt.totalDebt.plus(event.params.debt_adjustment)
@@ -304,6 +312,10 @@ export function handleCloseLoan(event: CloseLoanEvent): void {
   entity.debt_withdrawn = event.params.debt_withdrawn
   entity.debt_repaid = event.params.debt_repaid
 
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+  
   let moneyDebt = getOrCreateMoneyDebt(event.block.timestamp)
   moneyDebt.totalDebt = moneyDebt.totalDebt.minus(event.params.debt_repaid)
   moneyDebt.save()
