@@ -4,7 +4,7 @@ import {
   Withdraw as WithdrawEvent,
   SetRate as SetRateEvent
 } from "../generated/LLAMMA-AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80/LLAMMA_AMM"
-import { TokenExchange, Deposit, Withdraw, SetRate } from "../generated/schema"
+import { TokenExchange, DepositAMM, WithdrawAMM, SetRate } from "../generated/schema"
 import { Address } from "@graphprotocol/graph-ts"
 
 // Helper function to handle TokenExchange events
@@ -28,7 +28,7 @@ function handleTokenExchangeHelper(event: TokenExchangeEvent, ammAddress: Addres
 
 // Helper function to handle Deposit events
 function handleDepositHelper(event: DepositEvent, ammAddress: Address): void {
-  let entity = new Deposit(
+  let entity = new DepositAMM(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.provider = event.params.provider
@@ -46,7 +46,7 @@ function handleDepositHelper(event: DepositEvent, ammAddress: Address): void {
 
 // Helper function to handle Withdraw events
 function handleWithdrawHelper(event: WithdrawEvent, ammAddress: Address): void {
-  let entity = new Withdraw(
+  let entity = new WithdrawAMM(
     event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.provider = event.params.provider

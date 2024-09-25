@@ -91,8 +91,8 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - TokenExchange
-        - Deposit
-        - Withdraw
+        - DepositAMM
+        - WithdrawAMM
         - SetRate
       abis:
         - name: LLAMMA-AMM
@@ -120,8 +120,8 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - TokenExchange
-        - Deposit
-        - Withdraw
+        - DepositAMM
+        - WithdrawAMM
         - SetRate
       abis:
         - name: LLAMMA-AMM

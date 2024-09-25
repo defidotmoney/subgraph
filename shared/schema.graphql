@@ -391,7 +391,7 @@ type TokenExchange @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Deposit @entity(immutable: true) {
+type DepositAMM @entity(immutable: true) {
   amm_address: Bytes! # address
   id: Bytes!
   provider: Bytes! # address
@@ -403,7 +403,7 @@ type Deposit @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Withdraw @entity(immutable: true) {
+type WithdrawAMM @entity(immutable: true) {
   amm_address: Bytes! # address
   id: Bytes!
   provider: Bytes! # address
