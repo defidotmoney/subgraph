@@ -5,11 +5,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: CDPMainController
+    name: MainController
     network: arbitrum-one
     source:
       address: "0x1337F001E280420EcCe9E7B934Fa07D67fdb62CD"
-      abi: CDPMainController
+      abi: abis/cdp/MainController
       startBlock: 225735367
     mapping:
       kind: ethereum/events
@@ -36,8 +36,8 @@ dataSources:
         - CollectAmmFees
         - CollectFees
       abis:
-        - name: CDPMainController
-          file: ./abis/CDPMainController.json
+        - name: MainController
+          file: ./abis/cdp/MainController.json
       eventHandlers:
         - event: AddMarket(indexed address,address,address,uint256)
           handler: handleAddMarket
@@ -77,13 +77,13 @@ dataSources:
           handler: handleCollectAmmFees
         - event: CollectFees(uint256,uint256,uint256,uint256)
           handler: handleCollectFees
-      file: ./src/cdp-main-controller.ts
+      file: ./src/cdp/MainController.ts
   - kind: ethereum
-    name: LLAMMA-AMM-0xE73a960cD30659714aa8275Aa12aeec918e729D8
+    name: AMM-0xE73a960cD30659714aa8275Aa12aeec918e729D8
     network: arbitrum-one
     source:
       address: "0xE73a960cD30659714aa8275Aa12aeec918e729D8"
-      abi: LLAMMA-AMM
+      abi: AMM
       startBlock: 225736765
     mapping:
       kind: ethereum/events
@@ -95,8 +95,8 @@ dataSources:
         - WithdrawAMM
         - SetRate
       abis:
-        - name: LLAMMA-AMM
-          file: ./abis/LLAMMA-AMM.json
+        - name: AMM
+          file: ./abis/cdp/AMM.json
       eventHandlers:
         - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
           handler: handleTokenExchange0xE73a
@@ -106,13 +106,13 @@ dataSources:
           handler: handleWithdraw0xE73a
         - event: SetRate(uint256,uint256,uint256)
           handler: handleSetRate0xE73a
-      file: ./src/llamma-amm.ts
+      file: ./src/cdp/AMM.ts
   - kind: ethereum
-    name: LLAMMA-AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80
+    name: AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80
     network: arbitrum-one
     source:
       address: "0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80"
-      abi: LLAMMA-AMM
+      abi: AMM
       startBlock: 225736898
     mapping:
       kind: ethereum/events
@@ -124,8 +124,8 @@ dataSources:
         - WithdrawAMM
         - SetRate
       abis:
-        - name: LLAMMA-AMM
-          file: ./abis/LLAMMA-AMM.json
+        - name: AMM
+          file: ./abis/cdp/AMM.json
       eventHandlers:
         - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
           handler: handleTokenExchange0x9cabC
@@ -135,4 +135,4 @@ dataSources:
           handler: handleWithdraw0x9cabC
         - event: SetRate(uint256,uint256,uint256)
           handler: handleSetRate0x9cabC
-      file: ./src/llamma-amm.ts
+      file: ./src/cdp/AMM.ts

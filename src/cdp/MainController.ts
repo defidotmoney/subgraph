@@ -18,7 +18,7 @@ import {
   LiquidateLoan as LiquidateLoanEvent,
   CollectAmmFees as CollectAmmFeesEvent,
   CollectFees as CollectFeesEvent
-} from "../generated/CDPMainController/CDPMainController"
+} from "../../generated/MainController/MainController"
 import {
   AddMarket,
   SetDelegateApproval,
@@ -39,9 +39,9 @@ import {
   LiquidateLoan,
   CollectAmmFees,
   CollectFees
-} from "../generated/schema"
+} from "../../generated/schema"
 import { BigInt } from "@graphprotocol/graph-ts"
-import { MoneyDebt } from "../generated/schema"
+import { MoneyDebt } from "../../generated/schema"
 
 export function handleAddMarket(event: AddMarketEvent): void {
   let entity = new AddMarket(

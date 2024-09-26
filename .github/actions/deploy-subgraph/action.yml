@@ -27,14 +27,14 @@ runs:
         npm install -g @graphprotocol/graph-cli
         npm install -g @goldskycom/cli
 
-    - name: Copy shared folder contents
+    - name: Copy subgraph file
       shell: bash
       run: |
-        cp -r shared/* ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/
+        cp -r subgraph/${{ inputs.network }}/${{ inputs.environment }}.yaml subgraph.yaml
 
     - name: Deploy Subgraph
       shell: bash
-      working-directory: ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}
+      # working-directory: ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}
       env:
         GOLDSKY_API_KEY: ${{ inputs.goldsky_api_key }}
       run: |

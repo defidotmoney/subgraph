@@ -2,6 +2,10 @@
   "name": "defi-money-arbitrum",
   "license": "UNLICENSED",
   "scripts": {
+    "codegen:op:dev": "cat ./subgraph/optimism/dev.yaml > subgraph.yaml && graph codegen",
+    "codegen:op:prod": "cat ./subgraph/optimism/prod.yaml > subgraph.yaml && graph codegen",
+    "codegen:arb:dev": "cat ./subgraph/arbitrum/dev.yaml > subgraph.yaml && graph codegen",
+    "codegen:arb:prod": "cat ./subgraph/arbitrum/prod.yaml > subgraph.yaml && graph codegen",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ defi-money-arbitrum",

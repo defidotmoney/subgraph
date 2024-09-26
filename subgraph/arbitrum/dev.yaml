@@ -37,7 +37,7 @@ dataSources:
         - CollectFees
       abis:
         - name: CDPMainController
-          file: ./abis/CDPMainController.json
+          file: ./abis/cdp/MainController.json
       eventHandlers:
         - event: AddMarket(indexed address,address,address,uint256)
           handler: handleAddMarket
@@ -77,4 +77,4 @@ dataSources:
           handler: handleCollectAmmFees
         - event: CollectFees(uint256,uint256,uint256,uint256)
           handler: handleCollectFees
-      file: ./src/cdp-main-controller.ts
+      file: ./src/cdp/MainController.ts

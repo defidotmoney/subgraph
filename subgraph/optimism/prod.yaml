@@ -5,11 +5,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: CDPMainController
+    name: MainController
     network: optimism
     source:
       address: "0x1337F001E280420EcCe9E7B934Fa07D67fdb62CD"
-      abi: CDPMainController
+      abi: abis/cdp/MainController
       startBlock: 121875837
     mapping:
       kind: ethereum/events
@@ -36,8 +36,8 @@ dataSources:
         - CollectAmmFees
         - CollectFees
       abis:
-        - name: CDPMainController
-          file: ./abis/CDPMainController.json
+        - name: MainController
+          file: ./abis/cdp/MainController.json
       eventHandlers:
         - event: AddMarket(indexed address,address,address,uint256)
           handler: handleAddMarket
@@ -77,4 +77,4 @@ dataSources:
           handler: handleCollectAmmFees
         - event: CollectFees(uint256,uint256,uint256,uint256)
           handler: handleCollectFees
-      file: ./src/cdp-main-controller.ts
+      file: ./src/cdp/MainController.ts
