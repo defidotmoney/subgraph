@@ -5,11 +5,11 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: CDPMainController
+    name: MainController
     network: arbitrum-one
     source:
       address: "0xfb934020D98e20e0a0Ed6442156e42b076909ca8"
-      abi: CDPMainController
+      abi: MainController
       startBlock: 223682657
     mapping:
       kind: ethereum/events
@@ -36,7 +36,7 @@ dataSources:
         - CollectAmmFees
         - CollectFees
       abis:
-        - name: CDPMainController
+        - name: MainController
           file: ./abis/cdp/MainController.json
       eventHandlers:
         - event: AddMarket(indexed address,address,address,uint256)

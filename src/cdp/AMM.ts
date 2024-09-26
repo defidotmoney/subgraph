@@ -3,7 +3,7 @@ import {
   Deposit as DepositEvent,
   Withdraw as WithdrawEvent,
   SetRate as SetRateEvent
-} from "../../../generated/AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80/LLAMMA_AMM"
+} from "../../generated/AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80/AMM"
 import { TokenExchange, DepositAMM, WithdrawAMM, SetRate } from "../../generated/schema"
 import { Address } from "@graphprotocol/graph-ts"
 
@@ -77,7 +77,7 @@ function handleSetRateHelper(event: SetRateEvent, ammAddress: Address): void {
 
   entity.save()
 }
-// Event handlers for AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80
+// Event handlers for LLAMMA-AMM-0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80
 export function handleTokenExchange0x9cabC(event: TokenExchangeEvent): void {
   handleTokenExchangeHelper(event, Address.fromString("0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80"))
 }
@@ -94,7 +94,7 @@ export function handleSetRate0x9cabC(event: SetRateEvent): void {
   handleSetRateHelper(event, Address.fromString("0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80"))
 }
 
-// Event handlers for AMM-0xE73a960cD30659714aa8275Aa12aeec918e729D8
+// Event handlers for LLAMMA-AMM-0xE73a960cD30659714aa8275Aa12aeec918e729D8
 export function handleTokenExchange0xE73a(event: TokenExchangeEvent): void {
   handleTokenExchangeHelper(event, Address.fromString("0xE73a960cD30659714aa8275Aa12aeec918e729D8"))
 }

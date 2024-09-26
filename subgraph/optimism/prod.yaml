@@ -9,7 +9,7 @@ dataSources:
     network: optimism
     source:
       address: "0x1337F001E280420EcCe9E7B934Fa07D67fdb62CD"
-      abi: abis/cdp/MainController
+      abi: MainController
       startBlock: 121875837
     mapping:
       kind: ethereum/events
