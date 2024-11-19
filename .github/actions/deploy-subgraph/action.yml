@@ -1,0 +1,44 @@
+name: 'Deploy Subgraph'
+description: 'Deploy a subgraph to Goldsky'
+inputs:
+  environment:
+    description: 'Environment (dev or prod) (*dev is deprecated)'
+    required: true
+  network:
+    description: 'Network (optimism or arbitrum or base)'
+    required: true
+  goldsky_api_key:
+    description: 'Goldsky API Key'
+    required: true
+  version:
+    description: 'Version of the subgraph to deploy (e.g., 1.0.0, must be SemVer)'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        npm install -g @graphprotocol/graph-cli
+        npm install -g @goldskycom/cli
+
+    - name: Copy subgraph file
+      shell: bash
+      run: |
+        cp -r subgraph/${{ inputs.network }}/${{ inputs.environment }}.yaml subgraph.yaml
+
+    - name: Deploy Subgraph
+      shell: bash
+      # working-directory: ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}
+      env:
+        GOLDSKY_API_KEY: ${{ inputs.goldsky_api_key }}
+      run: |
+        npm install
+        graph codegen
+        graph build
+        goldsky subgraph deploy ${{ inputs.environment == 'dev' && 'dev-' || '' }}defi-money-${{ inputs.network }}/${{ inputs.version }} --token ${{ inputs.goldsky_api_key }} --tag dev

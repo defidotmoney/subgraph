@@ -1,0 +1,23 @@
+name: Deploy Optimism
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the subgraph to deploy (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  deploy-subgraphs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy Optimism Subgraph
+      uses: ./.github/actions/deploy-subgraph
+      with:
+        environment: prod
+        network: optimism
+        goldsky_api_key: ${{ secrets.GOLDSKY_API_KEY }}
+        version: ${{ github.event.inputs.version }}

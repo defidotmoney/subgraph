@@ -1,0 +1,30 @@
+name: 'Tag Subgraph'
+description: 'Tag a subgraph version as prod in Goldsky'
+inputs:
+  network:
+    description: 'Network (optimism or arbitrum or base)'
+    required: true
+  goldsky_api_key:
+    description: 'Goldsky API Key'
+    required: true
+  version:
+    description: 'Version of the subgraph to tag (e.g., 1.0.0, must be SemVer)'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install Goldsky CLI
+      shell: bash
+      run: npm install -g @goldskycom/cli
+
+    - name: Tag Subgraph as Prod
+      shell: bash
+      env:
+        GOLDSKY_API_KEY: ${{ inputs.goldsky_api_key }}
+      run: |
+        goldsky subgraph tag create defi-money-${{ inputs.network }}/${{ inputs.version }} --tag prod --token $GOLDSKY_API_KEY

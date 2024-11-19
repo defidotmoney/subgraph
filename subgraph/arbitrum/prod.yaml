@@ -1,0 +1,537 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  # MainController
+  - kind: ethereum
+    name: MainController
+    network: arbitrum-one
+    source:
+      address: "0x1337F001E280420EcCe9E7B934Fa07D67fdb62CD"
+      abi: MainController
+      startBlock: 225735367
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AddMarket
+        # - SetDelegateApproval
+        # - SetDelegationEnabled
+        # - SetProtocolEnabled
+        # - SetImplementations
+        # - AddMarketHook
+        # - RemoveMarketHook
+        # - HookDebtAjustment
+        # - AddMonetaryPolicy
+        # - ChangeMonetaryPolicy
+        # - ChangeMonetaryPolicyForMarket
+        # - SetGlobalMarketDebtCeiling
+        # - SetPegKeeperRegulator
+        - CreateLoan
+        - AdjustLoan
+        - CloseLoan
+        - LiquidateLoan
+        # - CollectAmmFees
+        # - CollectFees
+      abis:
+        - name: MainController
+          file: ./abis/cdp/MainController.json
+      eventHandlers:
+        # - event: AddMarket(indexed address,address,address,uint256)
+        #   handler: handleAddMarket
+        # - event: SetDelegateApproval(indexed address,indexed address,bool)
+        #   handler: handleSetDelegateApproval
+        # - event: SetDelegationEnabled(address,bool)
+        #   handler: handleSetDelegationEnabled
+        # - event: SetProtocolEnabled(address,bool)
+        #   handler: handleSetProtocolEnabled
+        # - event: SetImplementations(indexed uint256,address,address)
+        #   handler: handleSetImplementations
+        # - event: AddMarketHook(indexed address,indexed address,uint256,bool[4])
+        #   handler: handleAddMarketHook
+        # - event: RemoveMarketHook(indexed address,indexed address,uint256)
+        #   handler: handleRemoveMarketHook
+        # - event: HookDebtAjustment(indexed address,indexed address,int256,uint256,uint256)
+        #   handler: handleHookDebtAjustment
+        # - event: AddMonetaryPolicy(indexed uint256,address)
+        #   handler: handleAddMonetaryPolicy
+        # - event: ChangeMonetaryPolicy(indexed uint256,address)
+        #   handler: handleChangeMonetaryPolicy
+        # - event: ChangeMonetaryPolicyForMarket(indexed address,indexed uint256)
+        #   handler: handleChangeMonetaryPolicyForMarket
+        # - event: SetGlobalMarketDebtCeiling(uint256)
+        #   handler: handleSetGlobalMarketDebtCeiling
+        # - event: SetPegKeeperRegulator(address,bool)
+        #   handler: handleSetPegKeeperRegulator
+        - event: CreateLoan(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleCreateLoan
+        - event: AdjustLoan(indexed address,indexed address,indexed address,int256,int256)
+          handler: handleAdjustLoan
+        - event: CloseLoan(indexed address,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleCloseLoan
+        - event: LiquidateLoan(indexed address,indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleLiquidateLoan
+        # - event: CollectAmmFees(indexed address,uint256,uint256)
+        #   handler: handleCollectAmmFees
+        # - event: CollectFees(uint256,uint256,uint256,uint256)
+        #   handler: handleCollectFees
+      file: ./src/cdp/MainController.ts
+
+  # BridgeToken
+  - kind: ethereum
+    name: BridgeToken
+    network: arbitrum-one
+    source:
+      address: "0x69420f9E38a4e60a62224C489be4BF7a94402496"
+      abi: BridgeToken
+      startBlock: 225735313
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - Approval
+        # - BridgeEnabledSet
+        # - EIP712DomainChanged
+        # - EnforcedOptionSet
+        # - FlashMintEnabledSet
+        # - MinterSet
+        # - MsgInspectorSet
+        - OFTReceived
+        - OFTSent
+        # - OwnershipTransferred
+        # - PeerSet
+        # - PreCrimeSet
+        # - Transfer
+      abis:
+        - name: BridgeToken
+          file: ./abis/BridgeToken.json
+      eventHandlers:
+        # - event: Approval(indexed address,indexed address,uint256)
+        #   handler: handleApproval
+        # - event: BridgeEnabledSet(address,bool)
+        #   handler: handleBridgeEnabledSet
+        # - event: EIP712DomainChanged()
+        #   handler: handleEIP712DomainChanged
+        # - event: EnforcedOptionSet((uint32,uint16,bytes)[])
+        #   handler: handleEnforcedOptionSet
+        # - event: FlashMintEnabledSet(address,bool)
+        #   handler: handleFlashMintEnabledSet
+        # - event: MinterSet(address,bool)
+        #   handler: handleMinterSet
+        # - event: MsgInspectorSet(address)
+        #   handler: handleMsgInspectorSet
+        - event: OFTReceived(indexed bytes32,uint32,indexed address,uint256)
+          handler: handleOFTReceived
+        - event: OFTSent(indexed bytes32,uint32,indexed address,uint256,uint256)
+          handler: handleOFTSent
+        # - event: OwnershipTransferred(indexed address,indexed address)
+        #   handler: handleOwnershipTransferred
+        # - event: PeerSet(uint32,bytes32)
+        #   handler: handlePeerSet
+        # - event: PreCrimeSet(address)
+        #   handler: handlePreCrimeSet
+        # - event: Transfer(indexed address,indexed address,uint256)
+        #   handler: handleTransfer
+      file: ./src/BridgeToken.ts
+
+
+  # AMMs
+  - kind: ethereum
+    name: AMM-0
+    network: arbitrum-one
+    source:
+      address: "0xE73a960cD30659714aa8275Aa12aeec918e729D8"
+      abi: AMM
+      startBlock: 225736765
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-1
+    network: arbitrum-one
+    source:
+      address: "0x9cabC4d0eD66Ff48625D6f973A784c7234eB2B80"
+      abi: AMM
+      startBlock: 225736898
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-2
+    network: arbitrum-one
+    source:
+      address: "0xfeAf54Da93b427caCe0B6A063ABac637D1A981f5"
+      abi: AMM
+      startBlock: 225737028
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-3
+    network: arbitrum-one
+    source:
+      address: "0x8825E6BE3dC33e9651Dfa0583f95616D1E339Dda"
+      abi: AMM
+      startBlock: 251999206
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-4
+    network: arbitrum-one
+    source:
+      address: "0xfD3A1275A1Edda1237a2c82dA9f1736F2efa0BC9"
+      abi: AMM
+      startBlock: 262102889
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-5
+    network: arbitrum-one
+    source:
+      address: "0xa3c0533Cf448d0fbEacB1294cd63DdBbceB2f5f7"
+      abi: AMM
+      startBlock: 262103085
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: AMM-6
+    network: arbitrum-one
+    source:
+      address: "0xCaE9a11153cA1c0B8B1BC6A9EE3d5754c445f3d9"
+      abi: AMM
+      startBlock: 262103302
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+  - kind: ethereum
+    name: BoostedStaker-0
+    network: arbitrum-one
+    source:
+      address: "0xEbE54BEE7A397919C53850bA68E126b0A6b295ed"
+      abi: BoostedStaker
+      startBlock: 225743244
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts
+  - kind: ethereum
+    name: BoostedStaker-1
+    network: arbitrum-one
+    source:
+      address: "0xF2852d7e810d3EC7094bFE1D7DDCa5044c259c25"
+      abi: BoostedStaker
+      startBlock: 225745649
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts
+  - kind: ethereum
+    name: BoostedStaker-2
+    network: arbitrum-one
+    source:
+      address: "0x6e59b326984fC132F16a977cd20E38641A9043De"
+      abi: BoostedStaker
+      startBlock: 225744651
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts
+  - kind: ethereum
+    name: BoostedStaker-3
+    network: arbitrum-one
+    source:
+      address: "0xdE718A791226c93B53C77D60E5D4693C05a31422"
+      abi: BoostedStaker
+      startBlock: 225745097
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts
+  - kind: ethereum
+    name: BoostedStaker-4
+    network: arbitrum-one
+    source:
+      address: "0x07aDF588508b923B8eA0389d27b61b9CB8a197Cb"
+      abi: BoostedStaker
+      startBlock: 225745471
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts
+  - kind: ethereum
+    name: BoostedStaker-5
+    network: arbitrum-one
+    source:
+      address: "0xC3A3B90fFd41fD2267fFe6a042223180ffb66F04"
+      abi: BoostedStaker
+      startBlock: 262468713
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        # - AccountWeightUpdated
+        # - ApprovedUnstakerSet
+        # - LocksDisabled
+        - Staked
+        - Unstaked
+      abis:
+        - name: BoostedStaker
+          file: ./abis/BoostedStaker.json
+      eventHandlers:
+        # - event: AccountWeightUpdated(indexed address,indexed uint256,uint256,uint256)
+        #   handler: handleAccountWeightUpdated
+        # - event: ApprovedUnstakerSet(indexed address,indexed address,bool)
+        #   handler: handleApprovedUnstakerSet
+        # - event: LocksDisabled()
+        #   handler: handleLocksDisabled
+        - event: Staked(indexed address,indexed uint256,uint256,uint256,bool)
+          handler: handleStaked
+        - event: Unstaked(indexed address,indexed uint256,uint256,uint256)
+          handler: handleUnstaked
+      file: ./src/BoostedStaker.ts

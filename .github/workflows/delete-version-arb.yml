@@ -1,0 +1,22 @@
+name: Delete Arbitrum Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the subgraph to delete (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  delete-version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Delete Arbitrum Subgraph Version
+      uses: ./.github/actions/delete-subgraph
+      with:
+        network: arbitrum
+        goldsky_api_key: ${{ secrets.GOLDSKY_API_KEY }}
+        version: ${{ github.event.inputs.version }} 

@@ -1,0 +1,22 @@
+name: Tag Prod Optimism
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version of the subgraph to tag as prod (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  tag-prod:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Tag Optimism Subgraph as Prod
+      uses: ./.github/actions/tag-subgraph
+      with:
+        network: optimism
+        goldsky_api_key: ${{ secrets.GOLDSKY_API_KEY }}
+        version: ${{ github.event.inputs.version }}

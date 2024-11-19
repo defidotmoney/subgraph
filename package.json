@@ -1,0 +1,21 @@
+{
+  "name": "defi-money-arbitrum",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen:op": "cat ./subgraph/optimism/prod.yaml > subgraph.yaml && graph codegen",
+    "codegen:arb": "cat ./subgraph/arbitrum/prod.yaml > subgraph.yaml && graph codegen",
+    "codegen:base": "cat ./subgraph/base/prod.yaml > subgraph.yaml && graph codegen",
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ defi-money-arbitrum",
+    "create-local": "graph create --node http://localhost:8020/ defi-money-arbitrum",
+    "remove-local": "graph remove --node http://localhost:8020/ defi-money-arbitrum",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 defi-money-arbitrum",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.79.0",
+    "@graphprotocol/graph-ts": "0.32.0"
+  },
+  "devDependencies": { "matchstick-as": "0.5.0" }
+}

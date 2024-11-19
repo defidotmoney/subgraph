@@ -1,0 +1,666 @@
+# Controller 
+
+# type AddMarket @entity(immutable: true) {
+#   id: Bytes!
+#   collateral: Bytes! # address
+#   market: Bytes! # address
+#   amm: Bytes! # address
+#   mp_idx: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetDelegateApproval @entity(immutable: true) {
+#   id: Bytes!
+#   account: Bytes! # address
+#   delegate: Bytes! # address
+#   is_approved: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetDelegationEnabled @entity(immutable: true) {
+#   id: Bytes!
+#   caller: Bytes! # address
+#   is_enabled: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetProtocolEnabled @entity(immutable: true) {
+#   id: Bytes!
+#   caller: Bytes! # address
+#   is_enabled: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetImplementations @entity(immutable: true) {
+#   id: Bytes!
+#   A: BigInt! # uint256
+#   amm: Bytes! # address
+#   market: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type AddMarketHook @entity(immutable: true) {
+#   id: Bytes!
+#   market: Bytes! # address
+#   hook: Bytes! # address
+#   hook_type: BigInt! # uint256
+#   active_hooks: [Boolean!]! # bool[4]
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type RemoveMarketHook @entity(immutable: true) {
+#   id: Bytes!
+#   market: Bytes! # address
+#   hook: Bytes! # address
+#   hook_debt_released: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type HookDebtAjustment @entity(immutable: true) {
+#   id: Bytes!
+#   market: Bytes! # address
+#   hook: Bytes! # address
+#   adjustment: BigInt! # int256
+#   new_hook_debt: BigInt! # uint256
+#   new_total_hook_debt: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type AddMonetaryPolicy @entity(immutable: true) {
+#   id: Bytes!
+#   mp_idx: BigInt! # uint256
+#   monetary_policy: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type ChangeMonetaryPolicy @entity(immutable: true) {
+#   id: Bytes!
+#   mp_idx: BigInt! # uint256
+#   monetary_policy: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type ChangeMonetaryPolicyForMarket @entity(immutable: true) {
+#   id: Bytes!
+#   market: Bytes! # address
+#   mp_idx: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetGlobalMarketDebtCeiling @entity(immutable: true) {
+#   id: Bytes!
+#   debt_ceiling: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type SetPegKeeperRegulator @entity(immutable: true) {
+#   id: Bytes!
+#   regulator: Bytes! # address
+#   with_migration: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type CreateLoan @entity(immutable: true) {
+  id: Bytes!
+  market: Bytes! # address
+  account: Bytes! # address
+  caller: Bytes! # address
+  coll_amount: BigInt! # uint256
+  debt_amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type AdjustLoan @entity(immutable: true) {
+  id: Bytes!
+  market: Bytes! # address
+  account: Bytes! # address
+  caller: Bytes! # address
+  coll_adjustment: BigInt! # int256
+  debt_adjustment: BigInt! # int256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CloseLoan @entity(immutable: true) {
+  id: Bytes!
+  market: Bytes! # address
+  account: Bytes! # address
+  caller: Bytes! # address
+  coll_withdrawn: BigInt! # uint256
+  debt_withdrawn: BigInt! # uint256
+  debt_repaid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LiquidateLoan @entity(immutable: true) {
+  id: Bytes!
+  market: Bytes! # address
+  liquidator: Bytes! # address
+  account: Bytes! # address
+  coll_received: BigInt! # uint256
+  debt_received: BigInt! # uint256
+  debt_repaid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# type CollectAmmFees @entity(immutable: true) {
+#   id: Bytes!
+#   market: Bytes! # address
+#   amm_coll_fees: BigInt! # uint256
+#   amm_debt_fees: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type CollectFees @entity(immutable: true) {
+#   id: Bytes!
+#   minted: BigInt! # uint256
+#   redeemed: BigInt! # uint256
+#   total_debt: BigInt! # uint256
+#   fee: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# sMoney
+
+# type Approval @entity(immutable: true) {
+#   id: Bytes!
+#   owner: Bytes! # address
+#   spender: Bytes! # address
+#   value: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type BridgeEnabledSet @entity(immutable: true) {
+#   id: Bytes!
+#   caller: Bytes! # address
+#   isEnabled: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type Cooldown @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  assets: BigInt! # uint256
+  shares: BigInt! # uint256
+  cooldownEnd: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# type CooldownDurationUpdated @entity(immutable: true) {
+#   id: Bytes!
+#   cooldownDuration: BigInt! # uint32
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type Deposit @entity(immutable: true) {
+  id: Bytes!
+  caller: Bytes! # address
+  owner: Bytes! # address
+  assets: BigInt! # uint256
+  shares: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# type EnforcedOptionSet @entity(immutable: true) {
+#   id: Bytes!
+#   _enforcedOptions: [Bytes!]! # tuple[]
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type FeeAggregatorSet @entity(immutable: true) {
+#   id: Bytes!
+#   feeAggregator: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type GovStakerSet @entity(immutable: true) {
+#   id: Bytes!
+#   govStaker: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type MsgInspectorSet @entity(immutable: true) {
+#   id: Bytes!
+#   inspector: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type NewRewardPeriod @entity(immutable: true) {
+#   id: Bytes!
+#   day: BigInt! # uint256
+#   total: BigInt! # uint256
+#   stakerAmount: BigInt! # uint256
+#   govAmount: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type NotifyNewFees @entity(immutable: true) {
+#   id: Bytes!
+#   amount: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type OFTReceived @entity(immutable: true) {
+#   id: Bytes!
+#   guid: Bytes! # bytes32
+#   srcEid: BigInt! # uint32
+#   toAddress: Bytes! # address
+#   amountReceivedLD: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type OFTSent @entity(immutable: true) {
+#   id: Bytes!
+#   guid: Bytes! # bytes32
+#   dstEid: BigInt! # uint32
+#   fromAddress: Bytes! # address
+#   amountSentLD: BigInt! # uint256
+#   amountReceivedLD: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type OwnershipTransferred @entity(immutable: true) {
+#   id: Bytes!
+#   previousOwner: Bytes! # address
+#   newOwner: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type PeerSet @entity(immutable: true) {
+#   id: Bytes!
+#   eid: BigInt! # uint32
+#   peer: Bytes! # bytes32
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type PreCrimeSet @entity(immutable: true) {
+#   id: Bytes!
+#   preCrimeAddress: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type RewardRegulatorSet @entity(immutable: true) {
+#   id: Bytes!
+#   regulator: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unstake @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  receiver: Bytes! # address
+  assets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# AMMs
+
+type TokenExchange @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  buyer: Bytes! # address
+  sold_id: BigInt! # uint256
+  tokens_sold: BigInt! # uint256
+  bought_id: BigInt! # uint256
+  tokens_bought: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DepositAMM @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  provider: Bytes! # address
+  amount: BigInt! # uint256
+  n1: BigInt! # int256
+  n2: BigInt! # int256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WithdrawAMM @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  provider: Bytes! # address
+  amount_borrowed: BigInt! # uint256
+  amount_collateral: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetRate @entity(immutable: true) {
+  amm_address: Bytes! # address
+  id: Bytes!
+  rate: BigInt! # uint256
+  rate_mul: BigInt! # uint256
+  time: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# BridgeToken
+
+# type Approval @entity(immutable: true) {
+#   id: Bytes!
+#   owner: Bytes! # address
+#   spender: Bytes! # address
+#   value: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type BridgeEnabledSet @entity(immutable: true) {
+#   id: Bytes!
+#   caller: Bytes! # address
+#   isEnabled: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type EIP712DomainChanged @entity(immutable: true) {
+#   id: Bytes!
+
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type EnforcedOptionSet @entity(immutable: true) {
+#   id: Bytes!
+#   _enforcedOptions: [Bytes!]! # tuple[]
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type FlashMintEnabledSet @entity(immutable: true) {
+#   id: Bytes!
+#   caller: Bytes! # address
+#   isEnabled: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type MinterSet @entity(immutable: true) {
+#   id: Bytes!
+#   minter: Bytes! # address
+#   isApproved: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type MsgInspectorSet @entity(immutable: true) {
+#   id: Bytes!
+#   inspector: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type OFTReceived @entity(immutable: true) {
+  id: Bytes!
+  guid: Bytes! # bytes32
+  srcEid: BigInt! # uint32
+  toAddress: Bytes! # address
+  amountReceivedLD: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OFTSent @entity(immutable: true) {
+  id: Bytes!
+  guid: Bytes! # bytes32
+  dstEid: BigInt! # uint32
+  fromAddress: Bytes! # address
+  amountSentLD: BigInt! # uint256
+  amountReceivedLD: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+# type OwnershipTransferred @entity(immutable: true) {
+#   id: Bytes!
+#   previousOwner: Bytes! # address
+#   newOwner: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type PeerSet @entity(immutable: true) {
+#   id: Bytes!
+#   eid: BigInt! # uint32
+#   peer: Bytes! # bytes32
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type PreCrimeSet @entity(immutable: true) {
+#   id: Bytes!
+#   preCrimeAddress: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type Transfer @entity(immutable: true) {
+#   id: Bytes!
+#   from: Bytes! # address
+#   to: Bytes! # address
+#   value: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# BoostedStaker
+
+# type AccountWeightUpdated @entity(immutable: true) {
+#   id: Bytes!
+#   account: Bytes! # address
+#   epoch: BigInt! # uint256
+#   timestamp: BigInt! # uint256
+#   newWeight: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type ApprovedUnstakerSet @entity(immutable: true) {
+#   id: Bytes!
+#   account: Bytes! # address
+#   caller: Bytes! # address
+#   isApproved: Boolean! # bool
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type LocksDisabled @entity(immutable: true) {
+#   id: Bytes!
+
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+type Staked @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  epoch: BigInt! # uint256
+  amount: BigInt! # uint256
+  weightAdded: BigInt! # uint256
+  isLocked: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unstaked @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  epoch: BigInt! # uint256
+  amount: BigInt! # uint256
+  weightRemoved: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+
+# Custom Entities
+type UserSMoneyDeposits @entity {
+  id: Bytes!
+  balance: BigInt!
+  lastUpdated: BigInt!
+}
+
+type UserSMoneyTransfers @entity {
+  id: Bytes!
+  totalTransfers: BigInt!
+  lastUpdated: BigInt!
+}
+
+type BorrowRate @entity {
+  id: ID!
+  rate: BigInt!
+  dateDay: String!
+  amm_address: Bytes!
+}
+
+type MoneyDebt @entity {
+  id: ID!
+  dateDay: String!
+  totalDebt: BigInt!
+}
+
+type LoanCount @entity {
+  id: ID!
+  lifetime: BigInt!
+  current: BigInt!
+}
+
+type HistoryItem @entity(immutable: true) {
+  id: Bytes!
+  type: String!
+  user: Bytes!
+  contract_address: Bytes!
+  market: Bytes
+  amount: BigInt
+  collateralAmount: BigInt
+  debtAmount: BigInt
+  receiver: Bytes
+  liquidator: Bytes
+  guid: Bytes
+  dstEid: BigInt
+  amountSentLD: BigInt
+  amountReceivedLD: BigInt
+  epoch: BigInt
+  weightAdded: BigInt
+  weightRemoved: BigInt
+  isLocked: Boolean
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TotalBridged @entity {
+  id: String!
+  total: BigInt!
+  lastUpdated: BigInt!
+}
+
