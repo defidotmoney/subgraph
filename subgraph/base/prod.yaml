@@ -256,7 +256,36 @@ dataSources:
         - event: SetRate(uint256,uint256,uint256)
           handler: handleSetRate
       file: ./src/cdp/AMM.ts
-
+  - kind: ethereum
+    name: AMM-4
+    network: base
+    source:
+      address: "0x6b6b69Cc5624Da005A829b8fA20f31AE52A43e09"
+      abi: AMM
+      startBlock: 22762711
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TokenExchange
+        - DepositAMM
+        - WithdrawAMM
+        - SetRate
+      abis:
+        - name: AMM
+          file: ./abis/cdp/AMM.json
+      eventHandlers:
+        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleTokenExchange
+        - event: Deposit(indexed address,uint256,int256,int256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+        - event: SetRate(uint256,uint256,uint256)
+          handler: handleSetRate
+      file: ./src/cdp/AMM.ts
+    
   # BoostedStakers
   - kind: ethereum
     name: BoostedStaker-0
